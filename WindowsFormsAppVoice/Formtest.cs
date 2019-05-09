@@ -13,19 +13,19 @@ using System.Diagnostics;
 
 namespace WindowsFormsAppVoice
 {
-    public partial class Form1 : Form
+    public partial class Formtest : Form
     {
         private string args = "Jordi";
         Choices list = new Choices();
         SpeechSynthesizer synthesizer = new SpeechSynthesizer();
-        Boolean abrir = true;
-        public Form1()
+        Boolean abrir =true;
+        public Formtest()
         {
-            InitializeComponent();
+            
             synthesizer.SelectVoiceByHints(VoiceGender.Male); //Seleccionar la voz
-            SpeechRecognitionEngine rec = new SpeechRecognitionEngine();
-            list.Add(new String[] { "Hola", "Como estas", "Abre google", "abrir", "dormir", "restart" ,"abre openoffice"});
-
+            SpeechRecognitionEngine rec = new SpeechRecognitionEngine();                                                                   
+            list.Add(new String[] { "Hola", "Como estas" , "Abre google","abrir","dormir","restart"});
+                
             Grammar gr = new Grammar(new GrammarBuilder(list));
             try
             {
@@ -39,41 +39,14 @@ namespace WindowsFormsAppVoice
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.InnerException.Message);
+               MessageBox.Show(ex.InnerException.Message);
             }
             synthesizer.Speak("Hola, soy tu asistente");
             // Asynchronous
-            synthesizer.SpeakAsync("Bienvenido," + "" + args);
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
+            synthesizer.SpeakAsync("Bienvenido,"+""+ args); 
 
         }
-
-        private static void matarproceso(String Proceso)
-        {
-            System.Diagnostics.Process[] proc = null;
-            try
-            {
-                proc = Process.GetProcessesByName(Proceso);
-                Process prog = proc[0];
-                if (!prog.HasExited)
-                {
-                    prog.Kill();
-                }
-            }
-            finally
-            {
-                if (proc != null)
-                {
-                    foreach(Process p in proc)
-                    {
-                        p.Dispose();
-                    }
-                }
-            }
-        }
+        
         private void decir(String h)
         {
             synthesizer.Speak(h);
@@ -96,31 +69,21 @@ namespace WindowsFormsAppVoice
 
                 labelestado.Text = "Estado: OFF";
             }
-            if (abrir==true)
+            if (!abrir) { 
+            //LO QUE DECIMO
+            if (result == "Hola")
             {
-                //LO QUE DECIMO
-                if (result == "Hola")
-                {
-                    // LO QUE DICE
-                    decir("Hola");
-                }
-                if(result=="abre openoffice")
-                {
-                    Process.Start("C:\\Program Files (x86)\\OpenOffice 4\\program\\soffice.exe");
-                }
-                if (result == "cerrar openoffice")
-                {
-                    matarproceso("soffice.bin");
-                }
-
+                // LO QUE DICE
+                decir("Hola");
+            }
                 if (result == "restart")
                 {
                     restart();
                 }
-                if (result == "Abre google")
-                {
-                    Process.Start("https://www.google.es");
-                }
+            if(result== "Abre google")
+            {
+                Process.Start("https://www.google.es");
+            }
 
                 textBoxoutput.AppendText(result + "\n");
 
@@ -129,9 +92,16 @@ namespace WindowsFormsAppVoice
 
         private void restart()
         {
-           // Process.Start("C:\\Users\\jordi\\source\repos\\WindowsFormsAppVoice\\WindowsFormsAppVoice\bin\\Debug\\WindowsFormsAppVoice.exe");
+            Process.Start("C:\\Users\\jordi\\source\repos\\WindowsFormsAppVoice\\WindowsFormsAppVoice\bin\\Debug\\WindowsFormsAppVoice.exe");
             Environment.Exit(0);
 
         }
+        private void Form1_Load(object sender, EventArgs e)
+        {
+           
+        }
+
+
+       
     }
 }

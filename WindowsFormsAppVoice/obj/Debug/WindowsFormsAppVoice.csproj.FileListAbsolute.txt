@@ -2,9 +2,10 @@ C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\bin\Debug\
 C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\bin\Debug\WindowsFormsAppVoice.exe
 C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\bin\Debug\WindowsFormsAppVoice.pdb
 C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\obj\Debug\WindowsFormsAppVoice.csprojAssemblyReference.cache
-C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\obj\Debug\WindowsFormsAppVoice.Form1.resources
 C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\obj\Debug\WindowsFormsAppVoice.Properties.Resources.resources
 C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\obj\Debug\WindowsFormsAppVoice.csproj.GenerateResource.cache
 C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\obj\Debug\WindowsFormsAppVoice.csproj.CoreCompileInputs.cache
 C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\obj\Debug\WindowsFormsAppVoice.exe
 C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\obj\Debug\WindowsFormsAppVoice.pdb
+C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\obj\Debug\WindowsFormsAppVoice.Formtest.resources
+C:\Users\jordi\source\repos\WindowsFormsAppVoice\WindowsFormsAppVoice\obj\Debug\WindowsFormsAppVoice.Form1.resources
