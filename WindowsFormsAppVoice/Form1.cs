@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Speech.Synthesis;
 using System.Speech.Recognition;
 using System.Diagnostics;
+using System.IO;
 
 namespace WindowsFormsAppVoice
 {
@@ -19,13 +20,14 @@ namespace WindowsFormsAppVoice
         Choices list = new Choices();
         SpeechSynthesizer synthesizer = new SpeechSynthesizer();
         Boolean abrir = true;
+      public  Boolean buscar = false;
         public Form1()
         {
             InitializeComponent();
             synthesizer.SelectVoiceByHints(VoiceGender.Male); //Seleccionar la voz
             SpeechRecognitionEngine rec = new SpeechRecognitionEngine();
-            list.Add(new String[] { "Hola", "Como estas", "Abre google", "abrir", "dormir", "restart" ,"abre openoffice"});
-
+            // list.Add(new String[] { "Hola", "Como estas", "Abre google", "abrir", "dormir", "restart" ,"abre openoffice", "cerrar openoffice" ,"Hey tony","apagar","play","pause","siguiente"});
+            list.Add(File.ReadAllLines(@"C:\Users\jordi\Desktop\test.txt"));
             Grammar gr = new Grammar(new GrammarBuilder(list));
             try
             {
@@ -51,7 +53,7 @@ namespace WindowsFormsAppVoice
 
         }
 
-        private static void matarproceso(String Proceso)
+        public  void matarproceso(String Proceso)
         {
             System.Diagnostics.Process[] proc = null;
             try
@@ -63,6 +65,10 @@ namespace WindowsFormsAppVoice
                     prog.Kill();
                 }
             }
+            catch
+            {
+                decir("No se ha podido abrir");
+            }
             finally
             {
                 if (proc != null)
@@ -73,31 +79,38 @@ namespace WindowsFormsAppVoice
                     }
                 }
             }
+            proc=null;
         }
-        private void decir(String h)
+        public  void decir(String h)
         {
-            synthesizer.Speak(h);
+            //synthesizer.Speak(h);
+            synthesizer.SpeakAsync(h);
             textBoxinput.AppendText(h + "\n");
         }
-
+        String[] obtener = new String[3] { "Hola", "Hola,como es tas?", "adios" };
+        public String obteneraccion()
+        {
+            Random r = new Random();
+            return obtener[r.Next(3)];
+        }
 
         private void rec_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
         {
             String result = e.Result.Text;
 
-            if (result == "abrir")
+          
+            if (buscar)
             {
-                abrir = true;
-                labelestado.Text = "Estado: On";
+                Process.Start("https://www.google.es/search?client=opera&q="+result);
+                buscar = false;
             }
-            if (result == "dormir")
+            if (abrir==true && buscar==false)
             {
-                abrir = false;
-
-                labelestado.Text = "Estado: OFF";
-            }
-            if (abrir==true)
-            {
+                if(result == "busca")
+                {
+                    buscar = true;
+                   // Process.Start("https://www.google.es/search?client=opera&q=" + result);
+                }
                 //LO QUE DECIMO
                 if (result == "Hola")
                 {
@@ -106,7 +119,7 @@ namespace WindowsFormsAppVoice
                 }
                 if(result=="abre openoffice")
                 {
-                    Process.Start("C:\\Program Files (x86)\\OpenOffice 4\\program\\soffice.exe");
+                    Process.Start(@"C:\Program Files (x86)\OpenOffice 4\program\soffice.exe");
                 }
                 if (result == "cerrar openoffice")
                 {
@@ -121,6 +134,23 @@ namespace WindowsFormsAppVoice
                 {
                     Process.Start("https://www.google.es");
                 }
+                if (result == "apagar")
+                {
+                    Environment.Exit(0);
+
+                }
+                if (result == "play" ||result =="pause")
+                {
+                    SendKeys.Send(" ");
+                }
+                if (result == "^{RIGHT}")
+                {
+                    SendKeys.Send(" ");
+                }
+                if(result == "parar")
+                {
+                    synthesizer.SpeakAsyncCancelAll();
+                }
 
                 textBoxoutput.AppendText(result + "\n");
 
@@ -129,8 +159,15 @@ namespace WindowsFormsAppVoice
 
         private void restart()
         {
-           // Process.Start("C:\\Users\\jordi\\source\repos\\WindowsFormsAppVoice\\WindowsFormsAppVoice\bin\\Debug\\WindowsFormsAppVoice.exe");
-            Environment.Exit(0);
+            try
+            {
+                Process.Start(@"C:\\Users\\jordi\\source\repos\\WindowsFormsAppVoice\\WindowsFormsAppVoice\bin\\Debug\\WindowsFormsAppVoice.exe");
+                Environment.Exit(0);
+            }
+            catch
+            {
+                decir("No se ha podido cerrar");
+            }
 
         }
     }
